@@ -1,0 +1,3 @@
+[submodule "terraform-three-tier-architecture"]
+	path = terraform-three-tier-architecture
+	url = https://github.com/BeckyWu220/terraform-three-tier-architecture.git
