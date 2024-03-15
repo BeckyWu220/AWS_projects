@@ -12,11 +12,6 @@ Note: This project is built base on the assumption that you've have an ASG in pl
 - Create Scaling Policy to be triggered in corresponding to the CloudWatch alarm.
 `asg-scalingpolicy.tf`
 
-- CIS(Center for Internet Security) Alarms.
-
-
-
-
 ----
 ## To-do:
 * Provision SNS Topic to receive notifications. 
