@@ -10,3 +10,8 @@ resource "docker_container" "chefworkstation" {
   name = "chefworkstation"
   image = docker_image.chefworkstation.image_id
 }
+
+output "chefworkstation_container_name" {
+    description = "Container Name"
+    value = docker_container.chefworkstation.name
+}
