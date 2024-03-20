@@ -1,0 +1,26 @@
+FROM ubuntu:16.04
+
+RUN apt-get update && apt-get -y install sudo
+RUN apt-get -y install openssh-server
+
+RUN groupadd sshgroup && useradd -ms /bin/bash -g sshgroup sshuser
+
+RUN mkdir -p /home/sshuser/.ssh
+RUN touch /home/sshuser/.ssh/authorized_keys
+
+RUN chown sshuser:sshgroup /home/sshuser/.ssh/authorized_keys && chmod 600 /home/sshuser/.ssh/authorized_keys
+
+RUN service ssh start
+EXPOSE 22
+
+COPY ./chefclient_entrypoint.sh /usr/bin/docker-entrypoint.sh
+
+
+ENTRYPOINT [ "/bin/bash", "-c", "/usr/bin/docker-entrypoint.sh; /usr/sbin/sshd -D" ]
+
+# RUN useradd -m john && echo "john:johnpass" | chpasswd && adduser john sudo
+# USER john
+
+# CMD [ "/bin/bash" ]
+
+

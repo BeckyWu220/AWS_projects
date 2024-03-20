@@ -1,0 +1,36 @@
+services:
+  workstation:
+    build: 
+      context: .
+      args:
+        - NODE_NAME=${NODE_NAME:?NODE_NAME is not set}
+        - CHEF_SERVER_URL=${CHEF_SERVER_URL:?CHEF_SERVER_URL is not set}
+      dockerfile: Dockerfile.chefstation
+    container_name: chefworkstation
+    hostname: chefworkstation
+    tty: true
+    env_file:
+      - .env
+    environment:
+      CLIENT_KEY_FILE: /run/secrets/chefstation_client_key
+      PRI_KEY: /run/secrets/chefclient_pri_key
+    secrets:
+      - chefstation_client_key
+      - chefclient_pri_key
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.chefclient
+    container_name: chefclient
+    hostname: chefclient
+    environment:
+      PUB_KEY: /run/secrets/chefclient_pub_key
+    secrets:
+      - chefclient_pub_key
+secrets:
+  chefstation_client_key:
+    file: chefstation_client_key.pem
+  chefclient_pub_key:
+    file: chef_client_key.pub
+  chefclient_pri_key:
+    file: chef_client_key
