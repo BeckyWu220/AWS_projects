@@ -1,0 +1,20 @@
+FROM chef/chefworkstation:latest
+
+RUN apt-get update
+
+COPY ./webserver.rb /usr/bin/webserver.rb
+COPY ./chefstation_entrypoint.sh /usr/bin/docker-entrypoint.sh
+
+COPY chefstation_credentials.sh .
+COPY .env .
+COPY chefstation_credentials_template .
+RUN chmod +x chefstation_credentials.sh
+RUN ./chefstation_credentials.sh /usr/bin/credentials
+
+# COPY ./id_rsa.pem  /usr/bin/id_rsa.pem
+RUN echo $CHEFCLIENT_PRI_KEY > /usr/bin/chefclient_pri_key.pem
+
+ENTRYPOINT [ "/usr/bin/docker-entrypoint.sh" ]
+CMD [ "/bin/bash", "-c", "echo 'hello world'; /bin/bash" ]
+
+

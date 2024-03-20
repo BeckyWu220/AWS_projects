@@ -1,0 +1,4 @@
+*.pem
+*.pub
+chefstation_credentials
+chef_client_key
