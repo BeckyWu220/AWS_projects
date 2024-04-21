@@ -33,6 +33,24 @@ module "aurora" {
   db_name = var.db_name
 }
 
+module "s3_bucket" {
+  source = "terraform-aws-modules/s3-bucket/aws"
+
+  create_bucket = var.create_bucket
+
+  bucket = "cloud-summit-s3-bucket"
+
+  control_object_ownership = true
+  object_ownership         = "BucketOwnerPreferred"
+  acl    = "private"
+
+  force_destroy = true
+
+  versioning = {
+    enabled = false
+  }
+}
+
 locals {
   bedrock_username = "bedrock_user"
   bedrock_password = jsondecode(data.aws_secretsmanager_secret_version.bedrock_secret.secret_string)["password"]
@@ -100,6 +118,12 @@ resource "null_resource" "prepare_db" {
 output "db_endpoint" {
   description = "Writer Instance Endpoint. (Not needed unless for debugging purpose)" 
   value = module.aurora.db_endpoint
+}
+
+output "s3_bucket" {
+  depends_on = [ module.s3_bucket ]
+  description = "S3 bucket name"
+  value = module.s3_bucket.s3_bucket_id
 }
 
 output "vector_db_fields" {

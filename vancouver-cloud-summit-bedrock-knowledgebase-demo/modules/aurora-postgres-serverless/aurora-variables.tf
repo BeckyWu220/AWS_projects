@@ -14,12 +14,6 @@ variable "db_name" {
   default = "postgres"
 }
 
-variable "table_name" {
-    description = "Table Name"
-    type = string
-    default = "bedrock_integration.bedrock_kb"
-}
-
 variable "master_username" {
     description = "Master Username"
     type = string
