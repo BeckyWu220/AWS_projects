@@ -4,3 +4,7 @@ locals {
     env        = var.cluster_name
   }
 }
+
+output "eks_cluster_arn" {
+  value = module.eks.cluster_arn
+}

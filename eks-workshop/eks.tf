@@ -12,7 +12,7 @@ module "eks" {
       most_recent    = true
       configuration_values = jsonencode({
         env = {
-          ENABLE_POD_ENI                    = "true"
+          ENABLE_POD_ENI                    = "false"
           ENABLE_PREFIX_DELEGATION          = "true"
           POD_SECURITY_GROUP_ENFORCING_MODE = "standard"
         }
@@ -29,6 +29,8 @@ module "eks" {
 
   create_cluster_security_group = false
   create_node_security_group    = false
+
+  enable_cluster_creator_admin_permissions = true
 
   eks_managed_node_groups = {
     default = {

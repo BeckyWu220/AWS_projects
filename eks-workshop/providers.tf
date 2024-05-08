@@ -6,6 +6,17 @@ provider "aws" {
   profile = var.aws_profile
 }
 
+provider "kubernetes" {
+  config_path = "~/.kube/config"
+  config_context = module.eks.cluster_arn
+}
+
+provider "helm" {
+  kubernetes {
+    config_path = "~/.kube/config"
+  }
+}
+
 terraform {
   required_providers {
     aws = {

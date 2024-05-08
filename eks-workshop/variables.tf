@@ -31,3 +31,20 @@ variable "vpc_cidr" {
   type        = string
   default     = "10.42.0.0/16"
 }
+
+variable "git_repo_url" {
+  type = string
+  description = "Git repo URL that ArgoCD application will use to deploy the application"
+}
+
+variable "git_revision" {
+  type = string
+  description = "Git revision to use for the application. In case of Git, this can be commit, tag, or branch. "
+  default = "HEAD"
+}
+
+variable "git_path" {
+  type = string
+  description = "Path to the application in the git repository"
+  default = ""
+}
