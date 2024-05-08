@@ -1,0 +1,10 @@
+# Source: catalog/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: catalog
+  labels:
+    helm.sh/chart: catalog-0.0.1
+    {{ range .Values.catalog-labels }}
+    {{ . }}
+    {{ end }}
