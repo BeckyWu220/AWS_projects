@@ -1,10 +1,12 @@
-# Source: catalog/templates/serviceaccount.yaml
+# Source: {{ .Values.catalog }}/templates/serviceaccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  name: catalog
+  name: {{ .Values.catalog }}
   labels:
-    helm.sh/chart: catalog-0.0.1
-    {{ range .Values.catalog-labels }}
-    {{ . }}
-    {{ end }}
+    helm.sh/chart: {{ .Values.catalog }}-0.0.1
+    app.kubernetes.io/name: {{ .Values.catalog }}
+    app.kubernetes.io/instance: {{ .Values.catalog }}
+    app.kubernetes.io/component: service
+    app.kuberneres.io/owner: retail-store-sample
+    app.kubernetes.io/managed-by: Helm

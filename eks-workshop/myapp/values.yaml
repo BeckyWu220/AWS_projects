@@ -2,9 +2,4 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-catelog-labels:
-- app.kubernetes.io/name: catalog
-  app.kubernetes.io/instance: catalog
-  app.kubernetes.io/component: service
-  app.kuberneres.io/owner: retail-store-sample
-  app.kubernetes.io/managed-by: Helm
+catalog: "catalog"
