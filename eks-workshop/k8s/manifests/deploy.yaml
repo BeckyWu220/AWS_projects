@@ -115,12 +115,12 @@ spec:
             - name: DB_USER
               valueFrom:
                 secretKeyRef:
-                  name: catalog-db
+                  name: mysql-secret
                   key: username
             - name: DB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: catalog-db
+                  name: mysql-secret
                   key: password
           envFrom:
             - configMapRef:
@@ -199,12 +199,12 @@ spec:
             - name: MYSQL_USER
               valueFrom:
                 secretKeyRef:
-                  name: catalog-db
+                  name: mysql-secret
                   key: username
             - name: MYSQL_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: catalog-db
+                  name: mysql-secret
                   key: password
           args:
             - "--ignore-db-dir=lost+found"
