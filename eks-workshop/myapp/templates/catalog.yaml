@@ -239,7 +239,5 @@ spec:
               protocol: TCP
       volumes:
       - name: data
-        # emptyDir: {}
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+        emptyDir: {}
 
