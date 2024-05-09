@@ -1,10 +1,14 @@
 resource "kubernetes_namespace" "argocd" {
+  depends_on = [ module.eks ]
+
   metadata {
     name = "argocd"
   }
 }
 
 resource "helm_release" "argocd" {
+  depends_on = [ module.eks ]
+
   name       = "argocd"
   repository = "https://argoproj.github.io/argo-helm"
   chart      = "argo-cd"
@@ -19,13 +23,15 @@ resource "helm_release" "argocd" {
 }
 
 resource "kubernetes_namespace" "myapp" {
+  depends_on = [ module.eks ]
+
   metadata {
     name = "myapp"
   }
 }
 
 resource "kubernetes_manifest" "argo_application" {
-  depends_on = [ helm_release.argocd ]
+  depends_on = [ kubernetes_namespace.myapp, helm_release.argocd, module.eks ]
   provider = kubernetes
 
   manifest = {

@@ -158,6 +158,28 @@ spec:
           emptyDir:
             medium: Memory
 ---
+# Storageclass and PVC for catelog-mysql
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: aws-storageclass
+provisioner: kubernetes.io/aws-ebs
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mysql-pv-claim
+  labels:
+    app.kubernetes.io/name: catalog
+    app.kubernetes.io/component: mysql
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: aws-storageclass
+  resources:
+    - requests:
+        storage: 100Mi
+---
 # Source: catalog/templates/mysql-statefulset.yaml
 apiVersion: apps/v1
 kind: StatefulSet
@@ -170,7 +192,7 @@ metadata:
     app.kubernetes.io/component: mysql
     app.kubernetes.io/managed-by: Helm
 spec:
-  replicas: 1
+  replicas: 2
   serviceName: catalog-mysql
   selector:
     matchLabels:
@@ -217,5 +239,7 @@ spec:
               protocol: TCP
       volumes:
       - name: data
-        emptyDir: {}
+        # emptyDir: {}
+        persistentVolumeClaim:
+          claimName: mysql-pv-claim
 
