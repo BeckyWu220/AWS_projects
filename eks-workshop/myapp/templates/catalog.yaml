@@ -177,8 +177,8 @@ spec:
     - ReadWriteOnce
   storageClassName: aws-storageclass
   resources:
-    - requests:
-        storage: 100Mi
+    requests:
+      storage: 100Mi
 ---
 # Source: catalog/templates/mysql-statefulset.yaml
 apiVersion: apps/v1
